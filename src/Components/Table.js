@@ -40,10 +40,16 @@ const BooksList = ({ getBookId }) => {
                 <thead>
                     <tr>
                         <th>#</th>
-                        <th>Book Title</th>
-                        <th>Book Author</th>
-                        <th>Status</th>
-                        <th>Action</th>
+                        <th>Name</th>
+                        <th>Des</th>
+                        <th>Contact</th>
+                        <th>Email</th>
+                        <th>House No</th>
+                        <th>Street</th>
+                        <th>City</th>
+                        <th>District</th>
+                        <th>Postal Code</th>
+                        <th>Country</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -51,9 +57,16 @@ const BooksList = ({ getBookId }) => {
                         return (
                             <tr key={doc.id}>
                                 <td>{index + 1}</td>
-                                <td>{doc.title}</td>
-                                <td>{doc.author}</td>
-                                <td>{doc.status}</td>
+                                <td>{doc.name}</td>
+                                <td>{doc.description}</td>
+                                <td>{doc.contact}</td>
+                                <td>{doc.email}</td>
+                                <td>{doc.houseNo}</td>
+                                <td>{doc.street}</td>
+                                <td>{doc.city}</td>
+                                <td>{doc.district}</td>
+                                <td>{doc.postalCode}</td>
+                                <td>{doc.country}</td>
                                 <td>
                                     <Button
                                         variant="secondary"

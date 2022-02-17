@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Form, Alert, InputGroup, Button, ButtonGroup } from "react-bootstrap";
+import { Form, Alert, InputGroup, Button, Row, Col } from "react-bootstrap";
 import '../App.css';
 import BookDataService from "../Util/BookDataContext"
 
@@ -8,28 +8,42 @@ import BookDataService from "../Util/BookDataContext"
 const AddBook = ({ id, setBookId }) => {
 
     // States for the form fields
-    const [title, setTitle] = useState("");
-    const [author, setAuthor] = useState("");
-    const [status, setStatus] = useState("Available");
+    const [name, setName] = useState("");
+    const [description, setDescription] = useState("");
+    const [contact, setContact] = useState("");
+    const [email, setEmail] = useState("");
+    const [houseNo, setHouseNo] = useState("");
+    const [street, setStreet] = useState("");
+    const [district, setDistrict] = useState("");
+    const [city, setCity] = useState("");
+    const [postalCode, setPostalCode] = useState("");
+    const [country, setCountry] = useState("");
+
 
     // State to handle error messages
     const [message, setMessage] = useState({ error: false, msg: "" });
 
-    const [flag, setFlag] = useState(true);
 
 
     // 1) Handling Form Submit    
     const handleSubmit = async (e) => {
         e.preventDefault();  // prevents the page refreshing on submit
         setMessage("");
-        if (title === "" || author === "") {
+        if (name === "" || description === "" || contact === "" || email === "" || houseNo === "" || street === "" || district === "" || city === "" || postalCode === "" || country === "") {
             setMessage({ error: true, msg: "All fields are mandatory!" });
             return;
         }
         const newBook = {
-            title,
-            author,
-            status,
+            name,
+            description,
+            contact,
+            email,
+            houseNo,
+            street,
+            district,
+            city,
+            postalCode,
+            country,
         };
         console.log(newBook);
 
@@ -43,14 +57,22 @@ const AddBook = ({ id, setBookId }) => {
                 setMessage({ error: false, msg: "Updated successfully!" });
             } else {
                 await BookDataService.addBooks(newBook);
-                setMessage({ error: false, msg: "New Book added successfully!" });
+                setMessage({ error: false, msg: "New Record added successfully!" });
             }
         } catch (err) {
             setMessage({ error: true, msg: err.message });
         }
 
-        setTitle("");
-        setAuthor("");
+        setName("");
+        setDescription("");
+        setContact("");
+        setEmail("");
+        setHouseNo("");
+        setStreet("");
+        setDistrict("");
+        setCity("");
+        setPostalCode("");
+        setCountry("");
     };
 
     // 2) Update
@@ -61,9 +83,17 @@ const AddBook = ({ id, setBookId }) => {
         try {
             const docSnap = await BookDataService.getBook(id);
             console.log("the record is :", docSnap.data());
-            setTitle(docSnap.data().title);
-            setAuthor(docSnap.data().author);
-            setStatus(docSnap.data().status);
+            setName(docSnap.data().name);
+            setDescription(docSnap.data().description);
+            setContact(docSnap.data().contact);
+            setEmail(docSnap.data().email);
+            setHouseNo(docSnap.data().houseNo);
+            setStreet(docSnap.data().street);
+            setDistrict(docSnap.data().district);
+            setCity(docSnap.data().city);
+            setPostalCode(docSnap.data().postalCode);
+            setCountry(docSnap.data().country);
+
         } catch (err) {
             setMessage({ error: true, msg: err.message });
         }
@@ -79,7 +109,7 @@ const AddBook = ({ id, setBookId }) => {
         }
     }, [id]);
 
-    
+
     return (
         <>
             <div className="p-4 box">
@@ -97,52 +127,133 @@ const AddBook = ({ id, setBookId }) => {
                 {/* -------------- Alert Box END -------------- */}
 
                 {/* --------------Form START -------------- */}
-                <Form onSubmit={handleSubmit}>
+                <Form onSubmit={handleSubmit} className='rounded p-4 p-sm-4 border'>
+                    <h1 className='font-weight-bold text-center pb-4'>
+                        Data Form
+                    </h1>
                     <Form.Group className="mb-3" controlId="formBookTitle">
+                        <Form.Label>Name</Form.Label>
                         <InputGroup>
-                            <InputGroup.Text id="formBookTitle">B</InputGroup.Text>
                             <Form.Control
                                 type="text"
-                                placeholder="Book Title"
-                                value={title}
-                                onChange={(e) => setTitle(e.target.value)}
+                                placeholder="Company Name"
+                                value={name}
+                                onChange={(e) => setName(e.target.value)}
                             />
                         </InputGroup>
                     </Form.Group>
 
                     <Form.Group className="mb-3" controlId="formBookAuthor">
+                        <Form.Label>Description</Form.Label>
                         <InputGroup>
-                            <InputGroup.Text id="formBookAuthor">A</InputGroup.Text>
                             <Form.Control
                                 type="text"
-                                placeholder="Book Author"
-                                value={author}
-                                onChange={(e) => setAuthor(e.target.value)}
+                                placeholder="Description"
+                                value={description}
+                                onChange={(e) => setDescription(e.target.value)}
                             />
                         </InputGroup>
                     </Form.Group>
-                    <ButtonGroup aria-label="Basic example" className="mb-3">
-                        <Button
-                            disabled={flag}
-                            variant="success"
-                            onClick={(e) => {
-                                setStatus("Available");
-                                setFlag(true);
-                            }}
-                        >
-                            Available
-                        </Button>
-                        <Button
-                            variant="danger"
-                            disabled={!flag}
-                            onClick={(e) => {
-                                setStatus("Not Available");
-                                setFlag(false);
-                            }}
-                        >
-                            Not Available
-                        </Button>
-                    </ButtonGroup>
+
+                    <Form.Group className="mb-3" controlId="formBookTitle">
+                        <Form.Label>Contact Number</Form.Label>
+                        <InputGroup>
+                            <Form.Control
+                                type="tel"
+                                placeholder="Contact Number"
+                                value={contact}
+                                onChange={(e) => setContact(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="mb-3" controlId="formBookAuthor">
+                        <Form.Label>Email</Form.Label>
+                        <InputGroup>
+                            <Form.Control
+                                type="email"
+                                placeholder="Email"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Form.Group>
+
+                    <Row className="mb-1">
+                        <Form.Group as={Col} className="mb-3" controlId="formBookTitle">
+                            <Form.Label>House Number</Form.Label>
+                            <InputGroup>
+                                <Form.Control
+                                    type="number"
+                                    placeholder="Number"
+                                    value={houseNo}
+                                    onChange={(e) => setHouseNo(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Form.Group>
+
+                        <Form.Group as={Col} className="mb-3" controlId="formBookAuthor">
+                            <Form.Label>Street</Form.Label>
+                            <InputGroup>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="Street"
+                                    value={street}
+                                    onChange={(e) => setStreet(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Form.Group>
+                    </Row>
+
+                    <Row className="mb-1">
+                        <Form.Group as={Col} className="mb-3" controlId="formBookAuthor">
+                            <Form.Label>City</Form.Label>
+                            <InputGroup>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="City"
+                                    value={city}
+                                    onChange={(e) => setCity(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Form.Group>
+
+                        <Form.Group as={Col} className="mb-3" controlId="formBookTitle">
+                            <Form.Label>District</Form.Label>
+                            <InputGroup>
+                                <Form.Control
+                                    type="text"
+                                    placeholder="District"
+                                    value={district}
+                                    onChange={(e) => setDistrict(e.target.value)}
+                                />
+                            </InputGroup>
+                        </Form.Group>
+                    </Row>
+
+                    <Form.Group className="mb-3" controlId="formBookTitle">
+                        <Form.Label>Postal Code</Form.Label>
+                        <InputGroup>
+                            <Form.Control
+                                type="number"
+                                placeholder="Postal Code"
+                                value={postalCode}
+                                onChange={(e) => setPostalCode(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Form.Group>
+
+                    <Form.Group className="mb-4" controlId="formBookAuthor">
+                        <Form.Label>Country</Form.Label>
+                        <InputGroup>
+                            <Form.Control
+                                type="text"
+                                placeholder="Country"
+                                value={country}
+                                onChange={(e) => setCountry(e.target.value)}
+                            />
+                        </InputGroup>
+                    </Form.Group>
                     <div className="d-grid gap-2">
                         <Button variant="primary" type="Submit">
                             Add/ Update
