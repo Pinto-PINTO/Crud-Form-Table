@@ -1,9 +1,16 @@
 import React, { useEffect, useState } from "react";
 import { Table, Button } from "react-bootstrap";
 import '../App.css';
-import BookDataService from "../Util/BookDataContext"
+import BookDataService from "../Util/BookDataContext";
+import ModalTag from "./Modal"
+import 'bootstrap/dist/css/bootstrap.min.css';
+
 
 const BooksList = ({ getBookId }) => {
+
+    // ---------------------------------------
+    const [modalShow, setModalShow] = useState(false);
+    // ---------------------------------------
 
     // State to store all book records as an array
     const [books, setBooks] = useState([]);
@@ -34,6 +41,15 @@ const BooksList = ({ getBookId }) => {
                 </Button>
             </div>
             {/* -------------- Refresh Btn END -------------- */}
+
+            {/* ----------------------------------------------------------------- */}
+
+
+
+
+            {/* ----------------------------------------------------------------- */}
+
+
 
             {/* -------------- Table START -------------- */}
             <Table striped bordered hover size="sm">
@@ -68,6 +84,16 @@ const BooksList = ({ getBookId }) => {
                                 <td>{doc.postalCode}</td>
                                 <td>{doc.country}</td>
                                 <td>
+                                    <>
+                                        <Button variant="primary" onClick={(e) => {setModalShow(true); getBookId(doc.id)}}>
+                                            Edit
+                                        </Button>
+
+                                        <ModalTag
+                                            show={modalShow}
+                                            onHide={() => setModalShow(false)}
+                                        />
+                                    </>
                                     <Button
                                         variant="secondary"
                                         className="edit"
@@ -75,6 +101,8 @@ const BooksList = ({ getBookId }) => {
                                     >
                                         Edit
                                     </Button>
+
+
                                     <Button
                                         variant="danger"
                                         className="delete"
