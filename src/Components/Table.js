@@ -42,6 +42,8 @@ const BooksList = ({ getBookId }) => {
                         <th>#</th>
                         <th>Name</th>
                         <th>Des</th>
+                        <th>Category</th>
+                        <th>Sub Category</th>
                         <th>Contact</th>
                         <th>Email</th>
                         <th>House No</th>
@@ -59,6 +61,8 @@ const BooksList = ({ getBookId }) => {
                                 <td>{index + 1}</td>
                                 <td>{doc.name}</td>
                                 <td>{doc.description}</td>
+                                <td>{doc.category}</td>
+                                <td>{doc.subCategory}</td>
                                 <td>{doc.contact}</td>
                                 <td>{doc.email}</td>
                                 <td>{doc.houseNo}</td>
